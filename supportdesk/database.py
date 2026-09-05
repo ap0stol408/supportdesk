@@ -32,6 +32,8 @@ def initialize(path: Path) -> None:
                 body TEXT NOT NULL,
                 created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
+            CREATE INDEX IF NOT EXISTS issues_owner_created
+                ON issues(owner_id, created_at);
             """
         )
         db.executemany(
