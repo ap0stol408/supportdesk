@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlsplit
 from supportdesk.auth import SessionRegistry
 from supportdesk.config import Settings
 from supportdesk.service import IssueService
+from supportdesk.diagnostics import snapshot
 from supportdesk.templates import render_issue
 
 
@@ -52,6 +53,8 @@ class Application:
                 return json_response(404, {"error": "Ticket not found"})
             page = render_issue(issue)
             return Response(200, page.encode("utf-8"), "text/html; charset=utf-8")
+        if method == "GET" and url.path == "/api/debug":
+            return json_response(200, snapshot())
         if method == "GET" and url.path == "/api/issues":
             query = parameters.get("q", [""])[0]
             return json_response(200, {"issues": self.issues.search(user_id, query)})
