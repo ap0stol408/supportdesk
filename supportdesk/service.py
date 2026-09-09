@@ -21,11 +21,11 @@ class IssueService:
     def search(self, user_id: int, query: str) -> list[dict[str, object]]:
         statement = (
             "SELECT * FROM issues "
-            f"WHERE owner_id = {user_id} AND title LIKE '%{query}%' "
+            "WHERE owner_id = ? AND title LIKE ? "
             "ORDER BY id DESC LIMIT 50"
         )
         with connect(self.database) as db:
-            return [serialize(row) for row in db.execute(statement).fetchall()]
+            return [serialize(row) for row in db.execute(statement, (user_id, f"%{query}%")).fetchall()]
 
     def get(self, issue_id: int) -> dict[str, object] | None:
         with connect(self.database) as db:
