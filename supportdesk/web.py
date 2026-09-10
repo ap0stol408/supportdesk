@@ -48,7 +48,7 @@ class Application:
         if method == "GET" and url.path.startswith("/issues/"):
             issue_id = int(url.path.removeprefix("/issues/"))
             issue = self.issues.get(issue_id)
-            if issue is None:
+            if issue is None or issue["owner_id"] != user_id:
                 return json_response(404, {"error": "Ticket not found"})
             page = render_issue(issue)
             return Response(200, page.encode("utf-8"), "text/html; charset=utf-8")
@@ -67,7 +67,7 @@ class Application:
         if method == "GET" and url.path.startswith("/api/issues/"):
             issue_id = int(url.path.removeprefix("/api/issues/"))
             issue = self.issues.get(issue_id)
-            if issue is None:
+            if issue is None or issue["owner_id"] != user_id:
                 return json_response(404, {"error": "Ticket not found"})
             return json_response(200, issue)
         return json_response(404, {"error": "Route not found"})
