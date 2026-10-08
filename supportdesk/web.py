@@ -1,14 +1,14 @@
-from collections.abc import Mapping
-from dataclasses import dataclass
 import json
 import sqlite3
+from collections.abc import Mapping
+from dataclasses import dataclass
 from urllib.parse import parse_qs, urlsplit
 
+from supportdesk.attachments import read_attachment
 from supportdesk.auth import SessionRegistry
 from supportdesk.config import Settings
-from supportdesk.service import IssueService
-from supportdesk.attachments import read_attachment
 from supportdesk.diagnostics import snapshot
+from supportdesk.service import IssueService
 from supportdesk.templates import render_issue
 
 
