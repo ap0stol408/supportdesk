@@ -1,5 +1,5 @@
-from collections.abc import Mapping
 import secrets
+from collections.abc import Mapping
 
 
 class SessionRegistry:
