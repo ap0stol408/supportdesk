@@ -1,6 +1,6 @@
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
 from supportdesk.auth import SessionRegistry
 from supportdesk.config import Settings
